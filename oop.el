@@ -1,4 +1,11 @@
 (require 'eieio)
+(require 'json)
+
+(defun !to-json (x)
+  (json-encode x))
+
+(defun !from-json (x)
+  (json-parse-string x :null-object nil :false-object nil))
 
 (defmacro !return (x) `(throw 'return ,x))
 
