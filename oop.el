@@ -1,5 +1,23 @@
 (require 'eieio)
 
+(defmacro !return (x) `(throw 'return ,x))
+
+(defmacro !program (&rest body)
+  `(catch 'return
+     ,@body)
+  )
+;;(get 'progn 'lisp-indent-function)
+;;0
+(put '!program 'lisp-indent-function 0)
+
+(defmacro !method (name super &rest body)
+  `(cl-defmethod ,name ,super
+     (catch 'return
+       ,@body)
+     )
+  )
+(put '!method 'lisp-indent-function 'defun)
+
 (defmacro !class ($class $super &rest $spec-list)
   (if (not (listp $spec-list))
       (error "$spec list is not list")
