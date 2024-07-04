@@ -28,6 +28,10 @@
   )
 (put '!method 'lisp-indent-function 'defun)
 
+(defmacro !new (&rest $rest)
+  `(make-instance ,@$rest)
+  )
+
 (defmacro !class ($class $super &rest $spec-list)
   (if (not (listp $spec-list))
       (error "$spec list is not list")
