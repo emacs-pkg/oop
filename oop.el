@@ -7,6 +7,9 @@
 (defun !from-json (x)
   (json-parse-string x :null-object nil :false-object nil))
 
+(defun !empty-map ()
+  (make-hash-table :test #'equal))
+
 (defmacro !return (x) `(throw 'return ,x))
 
 (defmacro !program (&rest body)
@@ -46,6 +49,7 @@
          )
     `( ,(intern $sym-name)
        :initarg ,(intern (concat ":" $sym-name))
+       :accessor ,(intern (concat ":" $sym-name))
        :initform ,$ini-form )
     )
   )
